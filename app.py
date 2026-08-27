@@ -12,14 +12,15 @@ tasks = []
 task_id_control = 1
 
 @app.route("/tasks", methods=["POST"])
-def create_taks():
+def create_task():
     global task_id_control
     data = request.get_json()
-    new_task = Task(title=data["title"],description=data.get("decription",""))
+    # Passando o id e o task_id_control para a classe Task
+    new_task = Task(id=task_id_control, title=data["title"], description=data.get("description", ""))
     task_id_control += 1
     tasks.append(new_task)
     print(tasks)
-    return jsonify({"mensagem": "Nova tarefa criada com sucesso"})
+    return jsonify({"mensagem": "Nova tarefa criada com sucesso", "id": new_task.id})
 
 
 @app.route("/tasks",methods=["GET"])
@@ -56,7 +57,7 @@ def update_task(id):
 
     data =request.get_json()
     task.title = data["title"]
-    task.description = data["descrpition"]
+    task.description = data["description"]
     task.completed = data["completed"]
     print(task)
     return jsonify({"menssage": "Tarefa atualizada com sucesso"})
