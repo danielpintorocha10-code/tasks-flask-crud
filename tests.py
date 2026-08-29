@@ -34,3 +34,40 @@ def test_get_task():
         assert response.status_code == 200
         response_json = response.json()
         assert response_json["id"] == task_id
+
+def test_update_task():
+    if tasks:
+        task_id = tasks[0]
+        payload = {
+            "completed": True,
+            "description": "Nova descrição",
+            "title": "Título atualizado"
+        }
+        
+        # 1. Faz a requisição de atualização (PUT)
+        response = requests.put(f"{BASE_URL}/tasks/{task_id}", json=payload)
+        assert response.status_code == 200
+        response_json = response.json()
+        assert "message" in response_json
+
+        # 2. Faz uma consulta (GET) para verificar se os dados foram persistidos corretamente
+        response = requests.get(f"{BASE_URL}/tasks/{task_id}")
+        assert response.status_code == 200
+        response_json = response.json()
+        
+        # 3. Valida os campos da tarefa retornada pelo GET
+        assert response_json["title"] == payload["title"]
+        assert response_json["description"] == payload["description"]
+        assert response_json["completed"] == payload["completed"]
+
+        def test_delete_task():
+            if tasks:
+                task_id = tasks [0]
+                response = requests.delete(f"{BASE_URL}/tasks/{task_id}")
+                response.status_code == 200
+
+                response = requests.get(f"{BASE_URL}/tasks/{task_id}")
+                assert response.status_code == 404
+
+
+        

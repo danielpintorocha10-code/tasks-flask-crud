@@ -1,4 +1,5 @@
 from flask import Flask , request, jsonify
+import requests
 from models.task import Task
 
 
@@ -6,7 +7,7 @@ from models.task import Task
 app = Flask(__name__)
 
 #CRUD
-#Create,Read,Uptade and Delete = Criar,Let,Atualizar e Deletar
+#Create,Read,Uptade and Delete = Criar,LeR,Atualizar e Deletar
 
 tasks = []
 task_id_control = 1
@@ -53,14 +54,14 @@ def update_task(id):
             task = t
     print(task)
     if task == None:
-        return jsonify({"menssage": "Tarefa atualizada com sucesso"}),404
+        return jsonify({"message": "Tarefa atualizada com sucesso"}),404
 
     data =request.get_json()
     task.title = data["title"]
     task.description = data["description"]
     task.completed = data["completed"]
     print(task)
-    return jsonify({"menssage": "Tarefa atualizada com sucesso"})
+    return jsonify({"message": "Tarefa atualizada com sucesso"})
 
 @app.route("/tasks/<int:id>", methods=["DELETE"])
 def delete_task(id):
@@ -74,13 +75,13 @@ def delete_task(id):
 
     if task is None:
         return jsonify({
-            "mensagem": "Tarefa não encontrada"
+            "message": "Tarefa não encontrada"
         }), 404
 
     tasks.remove(task)
 
     return jsonify({
-        "mensagem": "Tarefa deletada com sucesso"
+        "message": "Tarefa deletada com sucesso"
     }), 200
 
 if __name__ == "__main__":
