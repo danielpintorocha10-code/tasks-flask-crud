@@ -1,0 +1,14 @@
+### 1. Criar uma nova tarefa (POST)
+POST http://127.0.0.1:5000/tasks
+Content-Type: application/json
+
+{
+    "title": "Aprender Flask com SQLAlchemy",
+    "description": "Estudar a criação de rotas e banco de dados"
+}
+
+### 2. Listar todas as tarefas (GET)
+GET http://127.0.0.1:5000/tasks
+
+### 3. Buscar uma tarefa específica por ID (GET)
+GET http://127.0.0.1:5000/tasks/1
